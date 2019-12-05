@@ -1,0 +1,11 @@
+version: '2'
+services:
+  teltx:
+    build: .
+    volumes:
+      - ".:/code"
+    working_dir: /code
+    environment:
+      - TCP_PORT=4000
+    ports:
+      - 4000:4000
