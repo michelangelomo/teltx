@@ -9,12 +9,14 @@ defmodule Teltx.Server.TCP do
 
   def start_link(_opts) do
     Logger.info("Starting TCP server...")
-    {:ok, _} = :ranch.start_listener(__MODULE__, 100, :ranch_tcp, [port: port()], Teltx.Server.Handler, [])
+
+    {:ok, _} =
+      :ranch.start_listener(__MODULE__, 100, :ranch_tcp, [port: port()], Teltx.Server.Handler, [])
   end
 
   @impl true
-  def init(_) do
-    #
+  def init(opts) do
+    {:ok, opts}
   end
 
   @spec port() :: integer()

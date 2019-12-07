@@ -9,3 +9,12 @@ services:
       - TCP_PORT=4000
     ports:
       - 4000:4000
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: "postgres"
+    environment:
+      - POSTGRES_USER=teltx
+      - POSTGRES_PASSWORD=teltx
+      - POSTGRES_DB=teltx

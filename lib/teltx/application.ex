@@ -5,7 +5,8 @@ defmodule Teltx.Application do
 
   def start(_type, _args) do
     children = [
-      Teltx.Server.TCP
+      Teltx.Server.TCP,
+      {Teltx.Repo, []}
     ]
 
     opts = [strategy: :one_for_one, name: Teltx.Supervisor]

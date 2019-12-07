@@ -9,6 +9,7 @@ defmodule Teltx.Decoder do
 
   def handle(payload) do
     payload
+    |> String.replace("\n", "")
     |> is_login?()
     |> manage()
   end
@@ -21,7 +22,7 @@ defmodule Teltx.Decoder do
     |> authentication_payload?(payload)
   end
 
-  defp get_first_8_char!(<<head :: binary-size(8)>> <> rest), do: head
+  defp get_first_8_char!(<<head::binary-size(8)>> <> _), do: head
 
   defp get_first_8_char!(_), do: "00000000"
 
@@ -29,8 +30,7 @@ defmodule Teltx.Decoder do
 
   defp authentication_payload?(_, payload), do: {:ok, :authentication, payload}
 
-  defp manage({:ok, :authentication, payload}), do: {:authenticated, Imei.extract(payload)}
+  defp manage({:ok, :authentication, payload}), do: Imei.extract(payload)
 
-  defp manage({:error, :no_authentication, payload}), do: nil
-
+  defp manage({:error, :no_authentication, _}), do: nil
 end
